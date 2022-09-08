@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'models/sidebar_m.dart';
 
+const String baseurl = "http://localhost:8080/api/v1";
+
 List<SidebarM> listSidebar = [
   SidebarM(
     title: "Home",

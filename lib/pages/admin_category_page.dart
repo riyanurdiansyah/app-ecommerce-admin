@@ -1,11 +1,26 @@
 import 'package:app_ecommerce_admin/app_constanta.dart';
+import 'package:app_ecommerce_admin/app_ecommerce_admin.dart';
 import 'package:app_ecommerce_admin/models/sort_m.dart';
 import 'package:app_ecommerce_setup/app_ecommerce_setup.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminCategoryPage extends StatelessWidget {
+class AdminCategoryPage extends StatefulWidget {
   const AdminCategoryPage({Key? key}) : super(key: key);
+
+  @override
+  State<AdminCategoryPage> createState() => _AdminCategoryPageState();
+}
+
+class _AdminCategoryPageState extends State<AdminCategoryPage> {
+  final _categoryBloc = CategoryBloc();
+
+  @override
+  void initState() {
+    _categoryBloc.add(GetAllCategory());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -354,32 +369,6 @@ class AdminCategoryPage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          FutureBuilder(
-            builder: (_, snapshot) {
-              if (snapshot.hasData) {
-                return const SizedBox();
-              } else if (snapshot.hasError) {
-                return Container(
-                  height: 250,
-                  alignment: Alignment.center,
-                  child: Text(
-                    snapshot.error.toString(),
-                    style: AppStyleText.stylePoppins(
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                );
-              } else {
-                return Container(
-                  height: 250,
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(),
-                );
-              }
-            },
           ),
         ],
       ),
