@@ -26,30 +26,26 @@ List<SidebarM> listSidebar = [
 
 List<SortM> listSortDate = [
   SortM(
-    title: "date".tr(),
-    type: "date",
-  ),
-  SortM(
     title: "latest".tr(),
-    type: "latest",
+    type: "date",
+    sortBy: "latest",
   ),
   SortM(
     title: "longest".tr(),
-    type: "longest",
+    type: "date",
+    sortBy: "longest",
   ),
 ];
 
-List<SortM> listSortTitle = [
-  SortM(
-    title: "name".tr(),
-    type: "name",
-  ),
+List<SortM> listSortName = [
   SortM(
     title: "A ~ z",
-    type: "asc",
+    type: "name",
+    sortBy: "asc",
   ),
   SortM(
     title: "Z ~ a",
-    type: "desc",
+    type: "name",
+    sortBy: "desc",
   ),
 ];
