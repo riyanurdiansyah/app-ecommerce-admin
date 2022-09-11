@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widget/category_row.dart';
+import 'widget/custom_pagination.dart';
+import 'widget/custom_popup_menu.dart';
 
 class AdminCategoryPage extends StatelessWidget {
   AdminCategoryPage({Key? key}) : super(key: key);
@@ -316,84 +318,19 @@ class AdminCategoryPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is CategoryLoadedState) {
                   return Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: List.generate(
-                          state.category.data?.length ?? 0,
-                          (i) => CategoryRow(
-                            isHeader: false,
-                            image: state.category.data![i].image!,
-                            name: state.category.data![i].name!,
-                            created: DateFormat.yMMMMd('id').format(
-                                DateTime.parse(
-                                    state.category.data![i].createdAt!)),
-                            updated: DateFormat.yMMMMd('id').format(
-                                DateTime.parse(
-                                    state.category.data![i].updatedAt!)),
-                            status: state.category.data![i].status.toString(),
-                          ),
-                        ),
+                    children: List.generate(
+                      state.category.data?.length ?? 0,
+                      (i) => CategoryRow(
+                        isHeader: false,
+                        image: state.category.data![i].image!,
+                        name: state.category.data![i].name!,
+                        created: DateFormat.yMMMMd('id').format(
+                            DateTime.parse(state.category.data![i].createdAt!)),
+                        updated: DateFormat.yMMMMd('id').format(
+                            DateTime.parse(state.category.data![i].updatedAt!)),
+                        status: state.category.data![i].status.toString(),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () => context.read<CategoryBloc>().add(
-                                    OnNextPrevPage(false),
-                                  ),
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: Icon(
-                                  Icons.arrow_back_ios_new_rounded,
-                                  size: 16,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Text(
-                              context.read<CategoryBloc>().page.toString(),
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            InkWell(
-                              onTap: () => context.read<CategoryBloc>().add(
-                                    OnNextPrevPage(true),
-                                  ),
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 16,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   );
                 } else if (state is CategoryErrorState) {
                   return Text(
@@ -412,34 +349,27 @@ class AdminCategoryPage extends StatelessWidget {
                 }
               },
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                return CustomPagination(
+                  onTapPage: () {},
+                  onTapNext: () => context.read<CategoryBloc>().add(
+                        OnNextPrevPage(true),
+                      ),
+                  onTapPrev: () => context.read<CategoryBloc>().add(
+                        OnNextPrevPage(false),
+                      ),
+                  lastpage: context.read<CategoryBloc>().lastPage,
+                  page: context.read<CategoryBloc>().page,
+                );
+              },
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomPopUpMenu extends StatelessWidget {
-  const CustomPopUpMenu({
-    Key? key,
-    required this.listMenu,
-    this.icon,
-    this.offset,
-  }) : super(key: key);
-
-  final List<PopupMenuEntry> listMenu;
-  final Widget? icon;
-  final Offset? offset;
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      offset: offset ?? const Offset(0, 0),
-      itemBuilder: (context) => listMenu,
-      icon: icon,
     );
   }
 }

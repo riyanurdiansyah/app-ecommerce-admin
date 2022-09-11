@@ -14,6 +14,12 @@ class OnNextPrevPage extends CategoryEvent {
   OnNextPrevPage(this.isNext);
 }
 
+class OnChangePage extends CategoryEvent {
+  int page;
+
+  OnChangePage({this.page = 1});
+}
+
 class LastPage extends CategoryEvent {
   int page;
 

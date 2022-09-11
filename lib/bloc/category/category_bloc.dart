@@ -7,7 +7,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   int get page => _page;
 
   int _lastPage = 0;
-  int get lastePage => _lastPage;
+  int get lastPage => _lastPage;
 
   CategoryBloc() : super(CategoryInitialState()) {
     on<GetAllCategory>(_getAllCategory);
