@@ -49,7 +49,7 @@ class AdminDashboardPage extends StatelessWidget {
                         ),
                         children: [
                           const AdminHomePage(),
-                          AdminCategoryPage(),
+                          const AdminCategoryPage(),
                           Container(
                             color: Colors.red,
                           ),

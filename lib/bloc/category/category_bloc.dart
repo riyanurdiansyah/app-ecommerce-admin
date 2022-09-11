@@ -20,6 +20,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<GetAllCategory>(_getAllCategory);
     on<OnNextPrevPage>(_onNextPrev);
     on<OnSortByName>(_onSortByName);
+    on<OnSearchByName>(_onsearchByName);
   }
   final _categoryRepository = CategoryRepository();
 
@@ -90,5 +91,26 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       }
       emit(CategoryLoadedState(listTemp));
     }
+  }
+
+  void _onsearchByName(event, emit) {
+    final category = (state as CategoryLoadedState).category;
+    CategoryM categoryTemp = CategoryM();
+    categoryTemp.data = category.data;
+    final query = (event as OnSearchByName).text;
+    for (var e in category.data!) {
+      if (e.name!.contains(query)) {
+        categoryTemp.data!.add(e);
+      }
+    }
+    category.data = categoryTemp.data!
+        .where(
+          (e) => e.name!.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        )
+        .toSet()
+        .toList();
+    emit(CategoryLoadedState(category));
   }
 }

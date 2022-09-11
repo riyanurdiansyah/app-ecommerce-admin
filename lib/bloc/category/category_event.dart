@@ -32,6 +32,12 @@ class OnChangePage extends CategoryEvent {
   OnChangePage({this.page = 1});
 }
 
+class OnSearchByName extends CategoryEvent {
+  String text;
+
+  OnSearchByName(this.text);
+}
+
 class LastPage extends CategoryEvent {
   int page;
 

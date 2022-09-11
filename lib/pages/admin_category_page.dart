@@ -88,57 +88,62 @@ class AdminCategoryPage extends StatelessWidget {
               width: double.infinity,
               child: Row(
                 children: [
-                  SizedBox(
-                    height: 40,
-                    width: size.width / 3,
-                    child: TextField(
-                      style: AppStyleText.stylePoppins(
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
-                      // controller: dashboardC.searchController,
-                      // onChanged: (val) => dashboardC.fnOnSearched(val),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromRGBO(241, 242, 244, 1),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        hintText: 'search_category'.tr(),
-                        hintStyle: AppStyleText.styleLato(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.highlight_remove_rounded,
-                            size: 18,
+                  BlocBuilder<CategoryBloc, CategoryState>(
+                    builder: (context, state) {
+                      return SizedBox(
+                        height: 40,
+                        width: size.width / 3,
+                        child: TextField(
+                          style: AppStyleText.stylePoppins(
+                            fontSize: 14,
+                            color: Colors.black,
                           ),
-                          onPressed: () {},
-                          color: Colors.grey,
-                        ),
-                        prefixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.search_rounded,
-                            size: 18,
+                          // onChanged: (val) => context
+                          //     .read<CategoryBloc>()
+                          //     .add(OnSearchByName(val)),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromRGBO(241, 242, 244, 1),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 0.2, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 0.2, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 0.2, color: Colors.white),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            hintText: 'search_category'.tr(),
+                            hintStyle: AppStyleText.styleLato(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: const Icon(
+                                Icons.highlight_remove_rounded,
+                                size: 18,
+                              ),
+                              onPressed: () {},
+                              color: Colors.grey,
+                            ),
+                            prefixIcon: IconButton(
+                              icon: const Icon(
+                                Icons.search_rounded,
+                                size: 18,
+                              ),
+                              onPressed: () {},
+                              color: Colors.grey,
+                            ),
                           ),
-                          onPressed: () {},
-                          color: Colors.grey,
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   const Spacer(),
                   SizedBox(

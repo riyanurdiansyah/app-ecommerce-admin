@@ -34,11 +34,8 @@ class CustomSidebar extends StatelessWidget {
                           overlayColor: MaterialStateProperty.all(
                               Colors.grey.withOpacity(0.4)),
                           highlightColor: Colors.grey,
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, "/${listSidebar[index].route}");
-                            // context.goNamed(listSidebar[index].route);
-                          },
+                          onTap: () => Navigator.pushNamed(
+                              context, "/${listSidebar[index].route}"),
                           child: AnimatedContainer(
                             duration: const Duration(
                               milliseconds: 1000,

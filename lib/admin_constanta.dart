@@ -16,9 +16,9 @@ List<SidebarM> listSidebar = [
     route: AppRouteName.category,
   ),
   SidebarM(
-    title: "Profile",
-    icon: Icons.person_rounded,
-    route: AppRouteName.profile,
+    title: "Promo",
+    icon: Icons.airplay_rounded,
+    route: AppRouteName.promo,
   ),
 ];
 
