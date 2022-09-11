@@ -2,6 +2,10 @@ library app_ecommerce_admin;
 
 ///PAGES FOLDER
 export 'pages/admin_home_page.dart';
+export 'pages/admin_auth_page.dart';
+export 'pages/admin_dashboard_page.dart';
+export 'pages/admin_category_page.dart';
+export 'pages/admin_promo_page.dart';
 
 ///BLOC FOLDER
 export 'bloc/sidebar/sidebar_bloc.dart';
