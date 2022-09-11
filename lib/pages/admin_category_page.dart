@@ -6,14 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widget/category_row.dart';
-import 'widget/custom_pagination.dart';
 import 'widget/custom_popup_menu.dart';
 
 class AdminCategoryPage extends StatelessWidget {
-  AdminCategoryPage({Key? key}) : super(key: key);
-
-  final _categoryBloc = CategoryBloc();
-
+  const AdminCategoryPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -88,7 +84,7 @@ class AdminCategoryPage extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               width: double.infinity,
               child: Row(
                 children: [
@@ -152,151 +148,195 @@ class AdminCategoryPage extends StatelessWidget {
                         Expanded(
                           child: SizedBox(
                             height: 55,
-                            child: CustomPopUpMenu(
-                              listMenu: List.generate(
-                                listSortName.length,
-                                (index) => PopupMenuItem(
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.abc_rounded,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Text(
-                                        listSortName[index].title!,
-                                        style: AppStyleText.stylePoppins(
-                                          fontSize: 14,
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              icon: Container(
-                                height: 55,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.abc_rounded,
-                                      size: 18,
-                                      color: Colors.grey.shade400,
-                                    ),
-                                    const SizedBox(
-                                      width: 12,
-                                    ),
-                                    BlocBuilder<CategoryBloc, CategoryState>(
-                                      builder: (_, state) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 4.0),
-                                          child: Text(
-                                            "name".tr(),
+                            child: BlocBuilder<CategoryBloc, CategoryState>(
+                              builder: (context, state) {
+                                return CustomPopUpMenu(
+                                  listMenu: List.generate(
+                                    listSortName.length,
+                                    (index) => PopupMenuItem(
+                                      onTap: () {
+                                        context.read<CategoryBloc>().add(
+                                              OnSortByName(
+                                                isAscending: listSortName[index]
+                                                        .sortBy ==
+                                                    'asc',
+                                                index: index,
+                                                type: listSortName[index].type!,
+                                              ),
+                                            );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.abc_rounded,
+                                            size: 16,
+                                          ),
+                                          const SizedBox(
+                                            width: 16,
+                                          ),
+                                          Text(
+                                            listSortName[index].title!,
                                             style: AppStyleText.stylePoppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.grey.shade400,
+                                              fontSize: 14,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                        );
-                                      },
+                                        ],
+                                      ),
                                     ),
-                                    const Spacer(),
-                                    Icon(
-                                      Icons.expand_more_rounded,
-                                      size: 16,
-                                      color: Colors.grey.shade400,
+                                  ),
+                                  icon: Container(
+                                    height: 55,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        width: 2,
+                                        color: Colors.grey.shade300,
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              offset: const Offset(-10, 50),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.abc_rounded,
+                                          size: 18,
+                                          color: Colors.grey.shade400,
+                                        ),
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        BlocBuilder<CategoryBloc,
+                                            CategoryState>(
+                                          builder: (_, state) {
+                                            final categoryBloc =
+                                                context.read<CategoryBloc>();
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 4.0),
+                                              child: Text(
+                                                categoryBloc
+                                                        .sortNameText.isEmpty
+                                                    ? "name".tr()
+                                                    : categoryBloc.sortNameText,
+                                                style:
+                                                    AppStyleText.stylePoppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey.shade400,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          Icons.expand_more_rounded,
+                                          size: 16,
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  offset: const Offset(-10, 50),
+                                );
+                              },
                             ),
                           ),
                         ),
                         Expanded(
                           child: SizedBox(
                             height: 55,
-                            child: CustomPopUpMenu(
-                              listMenu: List.generate(
-                                listSortDate.length,
-                                (index) => PopupMenuItem(
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.date_range_rounded,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Text(
-                                        listSortDate[index].title!,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              icon: Container(
-                                height: 55,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.grey.shade300,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.date_range_rounded,
-                                      size: 16,
-                                      color: Colors.grey.shade400,
-                                    ),
-                                    const SizedBox(
-                                      width: 12,
-                                    ),
-                                    BlocBuilder<CategoryBloc, CategoryState>(
-                                      builder: (_, state) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 4.0),
-                                          child: Text(
-                                            "date".tr(),
-                                            style: AppStyleText.stylePoppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.grey.shade400,
-                                            ),
-                                          ),
-                                        );
+                            child: BlocBuilder<CategoryBloc, CategoryState>(
+                              builder: (context, state) {
+                                return CustomPopUpMenu(
+                                  listMenu: List.generate(
+                                    listSortDate.length,
+                                    (index) => PopupMenuItem(
+                                      onTap: () {
+                                        context.read<CategoryBloc>().add(
+                                              OnSortByName(
+                                                isAscending: listSortDate[index]
+                                                        .sortBy ==
+                                                    'asc',
+                                                index: index,
+                                                type: listSortDate[index].type!,
+                                              ),
+                                            );
                                       },
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.date_range_rounded,
+                                            size: 16,
+                                          ),
+                                          const SizedBox(
+                                            width: 16,
+                                          ),
+                                          Text(
+                                            listSortDate[index].title!,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const Spacer(),
-                                    Icon(
-                                      Icons.expand_more_rounded,
-                                      size: 16,
-                                      color: Colors.grey.shade400,
+                                  ),
+                                  icon: Container(
+                                    height: 55,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        width: 2,
+                                        color: Colors.grey.shade300,
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              offset: const Offset(-10, 50),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.date_range_rounded,
+                                          size: 16,
+                                          color: Colors.grey.shade400,
+                                        ),
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        BlocBuilder<CategoryBloc,
+                                            CategoryState>(
+                                          builder: (context, state) {
+                                            final categoryBloc =
+                                                context.read<CategoryBloc>();
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 4.0),
+                                              child: Text(
+                                                categoryBloc
+                                                        .sortDateText.isEmpty
+                                                    ? "date".tr()
+                                                    : categoryBloc.sortDateText,
+                                                style:
+                                                    AppStyleText.stylePoppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey.shade400,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          Icons.expand_more_rounded,
+                                          size: 16,
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  offset: const Offset(-10, 50),
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -314,58 +354,66 @@ class AdminCategoryPage extends StatelessWidget {
               updated: 'updated'.tr(),
               status: 'Status',
             ),
-            BlocBuilder<CategoryBloc, CategoryState>(
-              builder: (context, state) {
-                if (state is CategoryLoadedState) {
-                  return Column(
-                    children: List.generate(
-                      state.category.data?.length ?? 0,
-                      (i) => CategoryRow(
-                        isHeader: false,
-                        image: state.category.data![i].image!,
-                        name: state.category.data![i].name!,
-                        created: DateFormat.yMMMMd('id').format(
-                            DateTime.parse(state.category.data![i].createdAt!)),
-                        updated: DateFormat.yMMMMd('id').format(
-                            DateTime.parse(state.category.data![i].updatedAt!)),
-                        status: state.category.data![i].status.toString(),
-                      ),
-                    ),
-                  );
-                } else if (state is CategoryErrorState) {
-                  return Text(
-                    state.errorMessage,
-                    style: AppStyleText.stylePoppins(
-                      fontSize: 18,
-                      color: Colors.grey.shade400,
-                    ),
-                  );
-                } else {
-                  return Container(
-                    height: 300,
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            BlocBuilder<CategoryBloc, CategoryState>(
-              builder: (context, state) {
-                return CustomPagination(
-                  onTapPage: () {},
-                  onTapNext: () => context.read<CategoryBloc>().add(
-                        OnNextPrevPage(true),
-                      ),
-                  onTapPrev: () => context.read<CategoryBloc>().add(
-                        OnNextPrevPage(false),
-                      ),
-                  lastpage: context.read<CategoryBloc>().lastPage,
-                  page: context.read<CategoryBloc>().page,
-                );
-              },
+            Expanded(
+              child: ListView(
+                children: [
+                  BlocBuilder<CategoryBloc, CategoryState>(
+                    builder: (context, state) {
+                      if (state is CategoryLoadedState) {
+                        return Column(
+                          children: List.generate(
+                            state.category.data?.length ?? 0,
+                            (i) => CategoryRow(
+                              isHeader: false,
+                              image: state.category.data![i].image!,
+                              name: state.category.data![i].name!,
+                              created: DateFormat.yMMMMd('id').format(
+                                  DateTime.parse(
+                                      state.category.data![i].createdAt!)),
+                              updated: DateFormat.yMMMMd('id').format(
+                                  DateTime.parse(
+                                      state.category.data![i].updatedAt!)),
+                              status: state.category.data![i].status.toString(),
+                            ),
+                          ),
+                        );
+                      } else if (state is CategoryErrorState) {
+                        return Text(
+                          state.errorMessage,
+                          style: AppStyleText.stylePoppins(
+                            fontSize: 18,
+                            color: Colors.grey.shade400,
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: 300,
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  // BlocBuilder<CategoryBloc, CategoryState>(
+                  //   builder: (context, state) {
+                  //     return CustomPagination(
+                  //       onTapPage: () {},
+                  //       onTapNext: () => context.read<CategoryBloc>().add(
+                  //             OnNextPrevPage(true),
+                  //           ),
+                  //       onTapPrev: () => context.read<CategoryBloc>().add(
+                  //             OnNextPrevPage(false),
+                  //           ),
+                  //       lastpage: context.read<CategoryBloc>().lastPage,
+                  //       page: context.read<CategoryBloc>().page,
+                  //     );
+                  //   },
+                  // ),
+                ],
+              ),
             ),
           ],
         ),

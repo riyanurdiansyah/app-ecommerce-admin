@@ -8,6 +8,18 @@ class GetAllCategory extends CategoryEvent {
 
 class OnChangedSortDate extends CategoryEvent {}
 
+class OnSortByName extends CategoryEvent {
+  bool isAscending;
+  int index;
+  String type;
+
+  OnSortByName({
+    this.isAscending = true,
+    this.index = 0,
+    this.type = '',
+  });
+}
+
 class OnNextPrevPage extends CategoryEvent {
   bool isNext;
 

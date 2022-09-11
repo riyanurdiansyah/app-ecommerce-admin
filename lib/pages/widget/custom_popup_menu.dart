@@ -15,6 +15,7 @@ class CustomPopUpMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      tooltip: '',
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

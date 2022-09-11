@@ -26,12 +26,12 @@ List<SortM> listSortDate = [
   SortM(
     title: "latest".tr(),
     type: "date",
-    sortBy: "latest",
+    sortBy: "asc",
   ),
   SortM(
     title: "longest".tr(),
     type: "date",
-    sortBy: "longest",
+    sortBy: "desc",
   ),
 ];
 
