@@ -22,12 +22,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<OnSortByName>(_onSortByName);
     on<OnSearchByName>(_onsearchByName);
   }
-  final _categoryRepository = CategoryRepository();
+  final _categoryRepository = CategoryRepositoryImpl();
 
   void _getAllCategory(event, emit) async {
     emit(CategoryLoadingState());
     try {
-      final response = await _categoryRepository.getAllCategory(_page);
+      final response = await _categoryRepository.getAllCategory();
       if (response.error.isEmpty) {
         _lastPage = response.lastPage!;
         emit(CategoryLoadedState(response));
@@ -54,7 +54,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             _page--;
           }
         }
-        final response = await _categoryRepository.getAllCategory(_page);
+        final response = await _categoryRepository.getAllCategory();
         if (response.error.isEmpty) {
           emit(CategoryLoadedState(response));
         } else {
