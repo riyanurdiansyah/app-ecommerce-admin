@@ -1,52 +1,22 @@
-import 'dart:developer';
-
-import 'package:app_ecommerce_admin/app_constanta.dart';
+import 'package:app_ecommerce_admin/admin_constanta.dart';
 import 'package:app_ecommerce_admin/app_ecommerce_admin.dart';
 import 'package:app_ecommerce_setup/app_ecommerce_setup.dart';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AdminCategoryPage extends StatefulWidget {
-  const AdminCategoryPage({Key? key}) : super(key: key);
+import 'widget/category_row.dart';
 
-  @override
-  State<AdminCategoryPage> createState() => _AdminCategoryPageState();
-}
+class AdminCategoryPage extends StatelessWidget {
+  AdminCategoryPage({Key? key}) : super(key: key);
 
-class _AdminCategoryPageState extends State<AdminCategoryPage> {
   final _categoryBloc = CategoryBloc();
-
-  @override
-  void initState() {
-    super.initState();
-    log("INIT CATEGORY");
-    Dio dio = Dio();
-    Future.delayed(const Duration(seconds: 1), () async {
-      final response = await dio.get(
-        "http://0.0.0.0:8080/api/v1/categories",
-        options: Options(
-          validateStatus: (val) {
-            return val! < 500;
-          },
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-            'Accept': '*/*',
-          },
-        ),
-      );
-
-      print("RESPONSE FETCH ALL CATEGORY : ${response.data}");
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return BlocProvider<CategoryBloc>(
-      create: (context) => CategoryBloc()..add(GetAllCategory()),
+      create: (context) => CategoryBloc()..add(GetAllCategory(1)),
       child: Container(
         color: Colors.white,
         child: Column(
@@ -334,96 +304,113 @@ class _AdminCategoryPageState extends State<AdminCategoryPage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 25,
+            CategoryRow(
+              isHeader: true,
+              image: 'image'.tr(),
+              name: 'name'.tr(),
+              created: 'created'.tr(),
+              updated: 'updated'.tr(),
+              status: 'Status',
             ),
-            Container(
-              height: 50,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Row(
-                children: [
-                  Checkbox(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4)),
-                    value: true,
-                    onChanged: (val) {},
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'image'.tr(),
-                        style: AppStyleText.stylePoppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade500,
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoadedState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: List.generate(
+                          state.category.data?.length ?? 0,
+                          (i) => CategoryRow(
+                            isHeader: false,
+                            image: state.category.data![i].image!,
+                            name: state.category.data![i].name!,
+                            created: DateFormat.yMMMMd('id').format(
+                                DateTime.parse(
+                                    state.category.data![i].createdAt!)),
+                            updated: DateFormat.yMMMMd('id').format(
+                                DateTime.parse(
+                                    state.category.data![i].updatedAt!)),
+                            status: state.category.data![i].status.toString(),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'name'.tr(),
-                        style: AppStyleText.stylePoppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade500,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () => context.read<CategoryBloc>().add(
+                                    OnNextPrevPage(false),
+                                  ),
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  size: 16,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Text(
+                              context.read<CategoryBloc>().page.toString(),
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            InkWell(
+                              onTap: () => context.read<CategoryBloc>().add(
+                                    OnNextPrevPage(true),
+                                  ),
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                    ],
+                  );
+                } else if (state is CategoryErrorState) {
+                  return Text(
+                    state.errorMessage,
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 18,
+                      color: Colors.grey.shade400,
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'created'.tr(),
-                        style: AppStyleText.stylePoppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'updated'.tr(),
-                        style: AppStyleText.stylePoppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        'Status',
-                        style: AppStyleText.stylePoppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue.shade500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                  );
+                } else {
+                  return Container(
+                    height: 300,
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ],
         ),

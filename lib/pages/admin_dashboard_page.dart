@@ -1,4 +1,4 @@
-import 'package:app_ecommerce_admin/app_constanta.dart';
+import 'package:app_ecommerce_admin/admin_constanta.dart';
 import 'package:app_ecommerce_admin/app_ecommerce_admin.dart';
 import 'package:app_ecommerce_admin/pages/admin_category_page.dart';
 import 'package:app_ecommerce_admin/pages/widget/sidebar.dart';
@@ -49,7 +49,7 @@ class AdminDashboardPage extends StatelessWidget {
                         ),
                         children: [
                           const AdminHomePage(),
-                          const AdminCategoryPage(),
+                          AdminCategoryPage(),
                           Container(
                             color: Colors.red,
                           ),

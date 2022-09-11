@@ -31,3 +31,13 @@ class CategoryOnChangeSortDateState extends CategoryState {
     this.sortBy,
   );
 }
+
+class CategoryChangePageState extends CategoryState {}
+
+class CategoryPageState extends CategoryState {
+  int page;
+
+  CategoryPageState({
+    this.page = 0,
+  });
+}

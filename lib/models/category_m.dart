@@ -2,6 +2,9 @@ class CategoryM {
   int? code;
   bool? status;
   String? message;
+  int? page;
+  int? total;
+  int? lastPage;
   List<Data>? data;
   String error = '';
 
@@ -16,6 +19,9 @@ class CategoryM {
     code = json['code'];
     status = json['status'];
     message = json['message'];
+    page = json['page'];
+    total = json['total'];
+    lastPage = json['last_page'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
@@ -29,6 +35,7 @@ class Data {
   int? id;
   String? name;
   String? image;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
@@ -38,6 +45,7 @@ class Data {
     id = json['id'];
     name = json['name'];
     image = json['image'];
+    status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
