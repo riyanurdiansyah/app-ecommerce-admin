@@ -23,6 +23,5 @@ export 'repositories_impl/promo_repository_impl.dart';
 export 'repositories/promo_repository.dart';
 
 ///MODEL FOLDER
-export 'models/category_m.dart';
 export 'models/sidebar_m.dart';
 export 'models/sort_m.dart';

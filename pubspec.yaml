@@ -10,8 +10,10 @@ environment:
 dependencies:
   app_ecommerce_setup:
     path: ../app-ecommerce-setup
+  dartz: ^0.10.1
   dio: ^4.0.6
   easy_localization: ^3.0.1
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1

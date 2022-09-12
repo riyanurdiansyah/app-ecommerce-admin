@@ -1,4 +1,4 @@
-import 'package:app_ecommerce_admin/models/category_m.dart';
+import 'package:app_ecommerce_admin/src/domain/entities/category_entity.dart';
 
 abstract class CategoryState {}
 
@@ -7,7 +7,7 @@ class CategoryLoadingState extends CategoryState {}
 class CategoryInitialState extends CategoryState {}
 
 class CategoryLoadedState extends CategoryState {
-  final CategoryM category;
+  final CategoryEntity category;
 
   CategoryLoadedState(
     this.category,
