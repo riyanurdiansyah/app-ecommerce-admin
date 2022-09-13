@@ -17,8 +17,6 @@ export 'bloc/category/category_state.dart';
 export 'bloc/promo/promo_bloc.dart';
 
 ///REPOSITORY FOLDER
-export 'repositories_impl/category_repository_impl.dart';
-export 'repositories/category_repository.dart';
 export 'repositories_impl/promo_repository_impl.dart';
 export 'repositories/promo_repository.dart';
 

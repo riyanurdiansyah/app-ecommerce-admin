@@ -21,6 +21,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   String _sortDateText = '';
   String get sortDateText => _sortDateText;
 
+  final bool _isError = false;
+  bool get isError => _isError;
+
   CategoryBloc() : super(CategoryInitialState()) {
     on<GetAllCategory>(_getAllCategory);
     on<OnNextPrevPage>(_onNextPrev);
@@ -36,10 +39,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     final response = await categoryUseCase.execute();
     response.fold(
       (Failure failure) {
-        if (failure is ServerFailure) {
-          return Fluttertoast.showToast(msg: failure.message);
+        if (failure is HttpFailure) {
+          if (!_isError) {
+            return Fluttertoast.showToast(
+                msg: 'Error ${failure.code}x ${failure.message}');
+          }
         } else {
-          return Fluttertoast.showToast(msg: 'Failed fetch category');
+          emit(CategoryErrorState(failure.toString()));
         }
       },
       (CategoryEntity category) {

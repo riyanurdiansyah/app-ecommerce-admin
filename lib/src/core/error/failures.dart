@@ -4,14 +4,14 @@ abstract class Failure extends Equatable {
   const Failure([List properties = const <dynamic>[]]) : super();
 }
 
-class ServerFailure extends Failure {
-  final String message;
+// class ServerFailure extends Failure {
+//   final String message;
 
-  const ServerFailure(this.message);
+//   const ServerFailure(this.message);
 
-  @override
-  List<Object?> get props => [message];
-}
+//   @override
+//   List<Object?> get props => [message];
+// }
 
 class HttpFailure extends Failure {
   final int code;

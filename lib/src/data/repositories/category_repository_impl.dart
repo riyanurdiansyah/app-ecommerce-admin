@@ -1,3 +1,4 @@
+import 'package:app_ecommerce_admin/src/core/exception/exception.dart';
 import 'package:app_ecommerce_admin/src/data/datasources/remote/category_remote_datasource.dart';
 import 'package:app_ecommerce_admin/src/domain/entities/category_entity.dart';
 import 'package:app_ecommerce_admin/src/core/error/failures.dart';
@@ -14,7 +15,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
       final response = await categoryRemoteDataSource.getAllCategory();
       return Right(response);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      if (e is CustomException) {
+        return Left(HttpFailure(e.code, e.message));
+      } else {
+        return Left(HttpFailure(500, e.toString()));
+      }
     }
   }
 }
