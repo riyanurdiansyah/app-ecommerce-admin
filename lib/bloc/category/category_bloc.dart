@@ -1,10 +1,10 @@
 import 'package:app_ecommerce_admin/admin_constanta.dart';
 import 'package:app_ecommerce_admin/app_ecommerce_admin.dart';
 import 'package:app_ecommerce_admin/src/core/error/failures.dart';
-import 'package:app_ecommerce_admin/src/data/datasources/remote/category_remote_datasource.dart';
-import 'package:app_ecommerce_admin/src/data/repositories/category_repository_impl.dart';
+import 'package:app_ecommerce_admin/src/data/datasources/remote/category_remote_datasource_impl.dart';
 import 'package:app_ecommerce_admin/src/domain/entities/category_entity.dart';
-import 'package:app_ecommerce_admin/src/domain/usecase/get_all_category.dart';
+import 'package:app_ecommerce_admin/src/domain/repositories/category_repository_impl.dart';
+import 'package:app_ecommerce_admin/src/domain/usecase/category_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -52,18 +52,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         emit(CategoryLoadedState(category));
       },
     );
-    // try {
-    //   final response = await _categoryRepository.getAllCategory();
-    //   if (response.error.isEmpty) {
-    //     _lastPage = response.lastPage!;
-    //     emit(CategoryLoadedState(response));
-    //   } else {
-    //     emit(CategoryErrorState(response.error));
-    //   }
-    // } catch (e) {
-    //   Fluttertoast.showToast(msg: "ERROR : ${e.toString()}");
-    //   emit(CategoryErrorState(e.toString()));
-    // }
   }
 
   void _onNextPrev(event, emit) async {

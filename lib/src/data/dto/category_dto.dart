@@ -3,23 +3,14 @@ import 'package:app_ecommerce_admin/src/domain/entities/category_entity.dart';
 import 'category_data_dto.dart';
 
 class CategoryDTO extends CategoryEntity {
-  const CategoryDTO({
-    required int code,
-    required bool status,
-    required String message,
-    required int page,
-    required int total,
-    required int lastPage,
-    required List<CategoryDataDTO> data,
-  }) : super(
-          code: code,
-          status: status,
-          message: message,
-          page: page,
-          total: total,
-          lastPage: lastPage,
-          data: data,
-        );
+  const CategoryDTO(
+      {required super.code,
+      required super.status,
+      required super.message,
+      required super.page,
+      required super.total,
+      required super.lastPage,
+      required super.data});
 
   factory CategoryDTO.fromJson(Map<String, dynamic> json) => CategoryDTO(
         code: json["code"],

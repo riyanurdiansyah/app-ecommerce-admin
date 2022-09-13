@@ -2,20 +2,13 @@ import 'package:app_ecommerce_admin/src/domain/entities/category_data_entity.dar
 
 class CategoryDataDTO extends CategoryDataEntity {
   CategoryDataDTO({
-    required int id,
-    required String name,
-    required String image,
-    required int status,
-    required String createdAt,
-    required String updatedAt,
-  }) : super(
-          id: id,
-          name: name,
-          image: image,
-          status: status,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-        );
+    required super.id,
+    required super.name,
+    required super.image,
+    required super.status,
+    required super.createdAt,
+    required super.updatedAt,
+  });
 
   factory CategoryDataDTO.fromJson(Map<String, dynamic> json) =>
       CategoryDataDTO(

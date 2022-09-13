@@ -16,10 +16,6 @@ export 'bloc/category/category_event.dart';
 export 'bloc/category/category_state.dart';
 export 'bloc/promo/promo_bloc.dart';
 
-///REPOSITORY FOLDER
-export 'repositories_impl/promo_repository_impl.dart';
-export 'repositories/promo_repository.dart';
-
 ///MODEL FOLDER
 export 'models/sidebar_m.dart';
 export 'models/sort_m.dart';

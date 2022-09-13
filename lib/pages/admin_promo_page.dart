@@ -341,21 +341,19 @@ class AdminPromoPage extends StatelessWidget {
                       if (state is PromoLoadedState) {
                         return Column(
                           children: List.generate(
-                            state.promo.data?.length ?? 0,
+                            state.promo.data.length,
                             (i) => PromoRow(
                               isHeader: false,
-                              description: state.promo.data![i].description!,
-                              expired: state.promo.data![i].expired.toString(),
-                              kodepromo: state.promo.data![i].kodePromo!,
-                              image: state.promo.data![i].image!,
-                              name: state.promo.data![i].name!,
+                              description: state.promo.data[i].description,
+                              expired: state.promo.data[i].expired.toString(),
+                              kodepromo: state.promo.data[i].kodepromo,
+                              image: state.promo.data[i].image,
+                              name: state.promo.data[i].name,
                               created: DateFormat.yMMMMd('id').format(
-                                  DateTime.parse(
-                                      state.promo.data![i].createdAt!)),
+                                  DateTime.parse(state.promo.data[i].created)),
                               updated: DateFormat.yMMMMd('id').format(
-                                  DateTime.parse(
-                                      state.promo.data![i].updatedAt!)),
-                              status: state.promo.data![i].status.toString(),
+                                  DateTime.parse(state.promo.data[i].updated)),
+                              status: state.promo.data[i].status.toString(),
                             ),
                           ),
                         );

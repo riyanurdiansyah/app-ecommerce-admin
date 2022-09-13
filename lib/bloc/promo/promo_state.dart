@@ -7,7 +7,7 @@ class PromoInitial extends PromoState {}
 class PromoLoadingState extends PromoState {}
 
 class PromoLoadedState extends PromoState {
-  final PromoM promo;
+  final PromoEntity promo;
 
   PromoLoadedState(
     this.promo,
