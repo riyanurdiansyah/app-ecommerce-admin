@@ -367,18 +367,18 @@ class AdminCategoryPage extends StatelessWidget {
                       if (state is CategoryLoadedState) {
                         return Column(
                           children: List.generate(
-                            state.category.data?.length ?? 0,
+                            state.category.data.length,
                             (i) => CategoryRow(
                               isHeader: false,
-                              image: state.category.data![i].image!,
-                              name: state.category.data![i].name!,
+                              image: state.category.data[i].image,
+                              name: state.category.data[i].name,
                               created: DateFormat.yMMMMd('id').format(
                                   DateTime.parse(
-                                      state.category.data![i].createdAt!)),
+                                      state.category.data[i].createdAt)),
                               updated: DateFormat.yMMMMd('id').format(
                                   DateTime.parse(
-                                      state.category.data![i].updatedAt!)),
-                              status: state.category.data![i].status.toString(),
+                                      state.category.data[i].updatedAt)),
+                              status: state.category.data[i].status.toString(),
                             ),
                           ),
                         );

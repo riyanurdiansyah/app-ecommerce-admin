@@ -32,7 +32,6 @@ class CategoryDTO extends CategoryEntity {
         lastPage: json["last_page"],
       );
 
-  @override
   Map<String, dynamic> toJson() => {
         "code": code,
         "status": status,
